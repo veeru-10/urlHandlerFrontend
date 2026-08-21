@@ -45,7 +45,8 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const authError = useSelector((state) => state.auth.error);
+  const { error: authError, status } = useSelector((state) => state.auth);
+  const isSigningUp = status === "signingUp";
   const onSubmit = async (data) => {
     const result = await dispatch(signupUser(data));
     if (!result.error) navigate("/login");
@@ -133,8 +134,12 @@ const SignUp = () => {
             {authError && (
               <p className="font-sans text-sm text-red-600">{authError}</p>
             )}
-            <button type="submit" className="ink-button mx-auto cursor-pointer">
-              Create account
+            <button
+              type="submit"
+              disabled={isSigningUp}
+              className="ink-button mx-auto cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isSigningUp ? "Signing up..." : "Create account"}
             </button>
 
             {/* <div className="flex gap-4">

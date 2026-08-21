@@ -14,7 +14,8 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { isAuthenticated, user, status } = useSelector((state) => state.auth);
+  const isLoggingOut = status === "loggingOut";
   const logout = async () => {
     await dispatch(logoutUser());
     setShowLogoutDialog(false);
@@ -136,9 +137,10 @@ const Navbar = () => {
               <button
                 type="button"
                 onClick={logout}
-                className="ink-button bg-[#b6533d] px-4 py-2 text-sm hover:bg-[#202523] cursor-pointer"
+                disabled={isLoggingOut}
+                className="ink-button cursor-pointer bg-[#b6533d] px-4 py-2 text-sm hover:bg-[#202523] disabled:cursor-not-allowed disabled:opacity-60"
               >
-                Sign out
+                {isLoggingOut ? "Logging out..." : "Sign out"}
               </button>
             </div>
           </div>

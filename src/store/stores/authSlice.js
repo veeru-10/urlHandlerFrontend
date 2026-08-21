@@ -53,23 +53,40 @@ export const signupUser = createAsyncThunk(
 const authSlice = createSlice({
   name : 'auth',
   initialState : {
-    name : null, isAuthenticated : false, isChecking: true, error: null
+    name : null, isAuthenticated : false, isChecking: true, error: null, status: 'idle'
   },
   reducers : {
     clearAuthError : (state) => { state.error = null;}
   },
   extraReducers : (builder) => {
     builder
-    .addCase(loginUser.pending, (state) => {state.error = null})
+    .addCase(loginUser.pending, (state) => { state.error = null; state.status = 'loggingIn' })
     .addCase(loginUser.fulfilled, (state, action) => {
       state.user = action.payload;
       state.isAuthenticated = true;
+      state.status = 'idle';
     })
     .addCase(loginUser.rejected, (state, action) => { 
-      state.error = action.payload
+      state.error = action.payload;
+      state.status = 'idle';
+    })
+    .addCase(signupUser.pending, (state) => { state.error = null; state.status = 'signingUp' })
+    .addCase(signupUser.fulfilled, (state) => {
+      state.status = 'idle';
     })
     .addCase(signupUser.rejected, (state, action) => {
-      state.error = action.payload
+      state.error = action.payload;
+      state.status = 'idle';
+    })
+    .addCase(logoutUser.pending, (state) => { state.status = 'loggingOut' })
+    .addCase(logoutUser.fulfilled, (state) => {
+      state.user = null;
+      state.isAuthenticated = false;
+      state.status = 'idle';
+    })
+    .addCase(logoutUser.rejected, (state, action) => {
+      state.error = action.payload;
+      state.status = 'idle';
     })
 
     .addCase(checkAuthStatus.pending, (state) => { state.isChecking = true })
@@ -82,11 +99,6 @@ const authSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
       state.isChecking = false;
-    })
-
-    .addCase(logoutUser.fulfilled, (state) => {
-      state.user = null;
-      state.isAuthenticated = false;
     })
   }
 })

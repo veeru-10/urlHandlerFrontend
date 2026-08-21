@@ -27,7 +27,8 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const authError = useSelector((state) => state.auth.error);
+  const { error: authError, status } = useSelector((state) => state.auth);
+  const isLoggingIn = status === "loggingIn";
 
   useEffect(() => {
     if (!authError) return undefined;
@@ -106,8 +107,12 @@ const Login = () => {
             {authError && (
               <p className="font-sans text-sm text-red-600">{authError}</p>
             )}
-            <button type="submit" className="ink-button mr-auto cursor-pointer">
-              Sign in
+            <button
+              type="submit"
+              disabled={isLoggingIn}
+              className="ink-button mr-auto cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {isLoggingIn ? "Logging in..." : "Sign in"}
             </button>
           </form>
         </div>
