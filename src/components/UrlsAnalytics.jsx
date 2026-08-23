@@ -49,26 +49,27 @@ const UrlsAnalytics = ({ urls = [], onEdit }) => {
     setUrlToDelete(null);
   };
   return (
-    <section className="animate-rise delay-2 overflow-hidden rounded-sm border border-[#ded6ca] bg-[#fffdf8]">
-      <div className="flex items-center justify-between border-b border-[#e7e0d6] px-5 py-5 sm:px-7">
-        <div>
-          <p className="eyebrow">Link library</p>
-          <h2 className="mt-1 text-2xl font-bold">Your URLs</h2>
+    <>
+      <section className="animate-rise delay-2 overflow-hidden rounded-sm border border-[#ded6ca] bg-[#fffdf8]">
+        <div className="flex items-center justify-between border-b border-[#e7e0d6] px-5 py-5 sm:px-7">
+          <div>
+            <p className="eyebrow">Link library</p>
+            <h2 className="mt-1 text-2xl font-bold">Your URLs</h2>
+          </div>
+          <span className="font-sans text-xs text-[#788078]">
+            {urls.length} {urls.length === 1 ? "link" : "links"}
+          </span>
         </div>
-        <span className="font-sans text-xs text-[#788078]">
-          {urls.length} {urls.length === 1 ? "link" : "links"}
-        </span>
-      </div>
-      {urls.length === 0 ? (
-        <div className="px-7 py-16 text-center">
-          <p className="text-xl font-bold">Your library is waiting.</p>
-          <p className="mt-2 font-sans text-sm text-[#788078]">
-            Shorten your first URL above and its performance will appear here.
-          </p>
-        </div>
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[720px] border-collapse text-left">
+        {urls.length === 0 ? (
+          <div className="px-7 py-16 text-center">
+            <p className="text-xl font-bold">Your library is waiting.</p>
+            <p className="mt-2 font-sans text-sm text-[#788078]">
+              Shorten your first URL above and its performance will appear here.
+            </p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[720px] border-collapse text-left">
             <thead>
               <tr className="font-sans text-[10px] uppercase tracking-widest text-[#8a9189]">
                 <th className="px-5 py-4 font-bold sm:px-7">Destination</th>
@@ -170,19 +171,20 @@ const UrlsAnalytics = ({ urls = [], onEdit }) => {
                 );
               })}
             </tbody>
-          </table>
-        </div>
-      )}
+            </table>
+          </div>
+        )}
+      </section>
       {urlToDelete && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-[#202523]/45 px-4"
+          className="fixed inset-0 z-50 flex min-h-screen items-center justify-center bg-[#202523]/45"
           role="presentation"
           onMouseDown={(event) => {
             if (event.currentTarget === event.target) setUrlToDelete(null);
           }}
         >
           <div
-            className="w-full border-y border-[#ded6ca] bg-[#fffdf8] px-6 py-7 shadow-2xl sm:px-10"
+            className="flex min-h-screen w-full flex-col justify-center bg-[#fffdf8] px-6 py-7 shadow-2xl sm:px-10"
             role="dialog"
             aria-modal="true"
             aria-labelledby="delete-dialog-title"
@@ -220,7 +222,7 @@ const UrlsAnalytics = ({ urls = [], onEdit }) => {
           </div>
         </div>
       )}
-    </section>
+    </>
   );
 };
 export default UrlsAnalytics;
