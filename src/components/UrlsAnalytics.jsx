@@ -182,7 +182,7 @@ const UrlsAnalytics = ({ urls = [], onEdit }) => {
           }}
         >
           <div
-            className="w-full border-y border-[#ded6ca] bg-[#fffdf8] px-6 py-7 shadow-2xl sm:px-10"
+            className="w-full max-w-md rounded-sm border border-[#ded6ca] bg-[#fffdf8] p-6 shadow-2xl"
             role="dialog"
             aria-modal="true"
             aria-labelledby="delete-dialog-title"
