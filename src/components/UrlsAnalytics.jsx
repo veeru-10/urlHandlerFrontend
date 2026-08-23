@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
+  AlertTriangle,
   Check,
   Copy,
   Edit3,
@@ -13,24 +14,39 @@ import { deleteUrl } from "../store/stores/urlSlice";
 const formatDate = (value) =>
   value
     ? new Intl.DateTimeFormat("en", {
-        month: "short",
-        day: "numeric",
-        year: "numeric",
-      }).format(new Date(value))
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    }).format(new Date(value))
     : "Never";
-  const API_URL = import.meta.env.VITE_BACKEND_URI || "http://localhost:5050";
-  const shortLink = (value) => `${API_URL}/api/urls/${value}`;
+const API_URL = import.meta.env.VITE_BACKEND_URI || "http://localhost:5050";
+const shortLink = (value) => `${API_URL}/${value}`;
 
 const UrlsAnalytics = ({ urls = [], onEdit }) => {
   const dispatch = useDispatch();
   const [copied, setCopied] = useState(null);
+  const [urlToDelete, setUrlToDelete] = useState(null);
+
+  useEffect(() => {
+    if (!urlToDelete) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setUrlToDelete(null);
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [urlToDelete]);
+
   const copy = async (url) => {
     await navigator.clipboard.writeText(shortLink(url.shortUrl));
     setCopied(url._id);
     window.setTimeout(() => setCopied(null), 1600);
   };
-  const remove = (url) => {
-    if (window.confirm("Delete this short link?")) dispatch(deleteUrl(url._id));
+  const remove = () => {
+    if (!urlToDelete) return;
+    dispatch(deleteUrl(urlToDelete._id));
+    setUrlToDelete(null);
   };
   return (
     <section className="animate-rise delay-2 overflow-hidden rounded-sm border border-[#ded6ca] bg-[#fffdf8]">
@@ -137,7 +153,7 @@ const UrlsAnalytics = ({ urls = [], onEdit }) => {
                         </button>
                         <button
                           title="Delete URL"
-                          onClick={() => remove(url)}
+                          onClick={() => setUrlToDelete(url)}
                           className="rounded p-2 text-[#788078] hover:bg-[#f6e5df] hover:text-[#b6533d]"
                         >
                           <Trash2 size={16} />
@@ -155,6 +171,53 @@ const UrlsAnalytics = ({ urls = [], onEdit }) => {
               })}
             </tbody>
           </table>
+        </div>
+      )}
+      {urlToDelete && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[#202523]/45 px-4"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.currentTarget === event.target) setUrlToDelete(null);
+          }}
+        >
+          <div
+            className="w-full max-w-md rounded-sm border border-[#ded6ca] bg-[#fffdf8] p-6 shadow-2xl"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-dialog-title"
+            aria-describedby="delete-dialog-description"
+          >
+            <div className="flex items-start gap-3">
+              <span className="mt-0.5 rounded-full bg-[#f6e5df] p-2 text-[#b6533d]">
+                <AlertTriangle size={18} aria-hidden="true" />
+              </span>
+              <div>
+                <h2 id="delete-dialog-title" className="text-xl font-bold">
+                  Delete this short link?
+                </h2>
+                <p id="delete-dialog-description" className="mt-2 font-sans text-sm leading-6 text-[#788078]">
+                  This action cannot be undone. The link and its analytics will be permanently removed.
+                </p>
+              </div>
+            </div>
+            <div className="mt-6 flex justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setUrlToDelete(null)}
+                className="outline-button"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={remove}
+                className="ink-button bg-[#b6533d] hover:bg-[#963f2e]"
+              >
+                Delete link
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </section>

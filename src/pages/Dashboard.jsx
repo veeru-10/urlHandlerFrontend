@@ -13,24 +13,49 @@ const Dashboard = () => {
   );
   const user = useSelector((state) => state.auth.user);
   const [editingUrl, setEditingUrl] = useState(null);
+
   useEffect(() => {
     dispatch(fetchUrlData());
+  }, [dispatch]);
 
-    const refreshUrls = () => dispatch(fetchUrlData({ silent: true }));
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === "visible") refreshUrls();
-    };
+  useEffect(() => {
+    const refresh = () => dispatch(fetchUrlData({ silent: true }));
+    const handleVisibility = () => document.visibilityState === "visible" && refresh();
 
-    window.addEventListener("focus", refreshUrls);
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    const refreshInterval = window.setInterval(refreshUrls, 2000);
+    window.addEventListener("focus", refresh);
+    document.addEventListener("visibilitychange", handleVisibility);
 
     return () => {
-      window.removeEventListener("focus", refreshUrls);
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
-      window.clearInterval(refreshInterval);
+      window.removeEventListener("focus", refresh);
+      document.removeEventListener("visibilitychange", handleVisibility);
     };
   }, [dispatch]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      dispatch(fetchUrlData({ silent: true }));
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [dispatch]);
+  //   useEffect(() => {
+  //   dispatch(fetchUrlData());
+
+  //   const refreshUrls = () => dispatch(fetchUrlData({ silent: true }));
+  //   const handleVisibilityChange = () => {
+  //     if (document.visibilityState === "visible") refreshUrls();
+  //   };
+
+  //   window.addEventListener("focus", refreshUrls);
+  //   document.addEventListener("visibilitychange", handleVisibilityChange);
+  //   const refreshInterval = window.setInterval(refreshUrls, 2000);
+
+  //   return () => {
+  //     window.removeEventListener("focus", refreshUrls);
+  //     document.removeEventListener("visibilitychange", handleVisibilityChange);
+  //     window.clearInterval(refreshInterval);
+  //   };
+  // }, [dispatch]);
   return (
     <div className="py-8 sm:py-12">
       <header className="animate-rise mb-8 flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
