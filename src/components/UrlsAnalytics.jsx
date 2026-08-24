@@ -20,7 +20,7 @@ const formatDate = (value) =>
     }).format(new Date(value))
     : "Never";
 const API_URL = import.meta.env.VITE_BACKEND_URI || "http://localhost:5050";
-const shortLink = (value) => `${API_URL}/${value}`;
+const shortLink = (value) => `${API_URL}/api/urls/${value}`;
 
 const UrlsAnalytics = ({ urls = [], onEdit }) => {
   const dispatch = useDispatch();
