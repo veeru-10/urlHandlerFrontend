@@ -64,7 +64,7 @@ const Dashboard = () => {
           <h1 className="mt-2 text-4xl font-bold tracking-tight sm:text-5xl">
             Good to see you
             <span className="text-[#b6533d]">
-              {user?.name ? `, ${user.name.split(" ")[0]}` : ""}.
+              {user?.name ? `, ${user.name.split(" ")[0]}` : "user"}.
             </span>
           </h1>
           <p className="mt-3 max-w-xl font-sans text-sm leading-6 text-[#687069]">

@@ -106,7 +106,7 @@ const UrlsAnalytics = ({ urls = [], onEdit }) => {
                         onClick={() => copy(url)}
                         className="group flex items-center gap-2 text-[#b6533d] hover:underline"
                       >
-                        <span>/{url.shortUrl}</span>
+                        <span className="cursor-pointer">/{url.shortUrl}</span>
                         {copied === url._id ? (
                           <Check size={15} />
                         ) : (
@@ -140,27 +140,27 @@ const UrlsAnalytics = ({ urls = [], onEdit }) => {
                           href={shortLink(url.shortUrl)}
                           target="_blank"
                           rel="noreferrer"
-                          className="rounded p-2 text-[#788078] hover:bg-[#eee8df] hover:text-[#202523]"
+                          className="rounded p-2 text-[#788078] hover:bg-[#eee8df] hover:text-[#202523] cursor-pointer"
                         >
                           <ExternalLink size={16} />
                         </a>
                         <button
                           title="Edit URL"
                           onClick={() => onEdit(url)}
-                          className="rounded p-2 text-[#788078] hover:bg-[#eee8df] hover:text-[#b6533d]"
+                          className="rounded p-2 text-[#788078] hover:bg-[#eee8df] hover:text-[#b6533d] cursor-pointer"
                         >
                           <Edit3 size={16} />
                         </button>
                         <button
                           title="Delete URL"
                           onClick={() => setUrlToDelete(url)}
-                          className="rounded p-2 text-[#788078] hover:bg-[#f6e5df] hover:text-[#b6533d]"
+                          className="rounded p-2 text-[#788078] hover:bg-[#f6e5df] hover:text-[#b6533d] cursor-pointer"
                         >
                           <Trash2 size={16} />
                         </button>
                         <button
                           title="More actions"
-                          className="rounded p-2 text-[#788078] hover:bg-[#eee8df]"
+                          className="rounded p-2 text-[#788078] hover:bg-[#eee8df] cursor-pointer"
                         >
                           <MoreHorizontal size={16} />
                         </button>
@@ -205,14 +205,14 @@ const UrlsAnalytics = ({ urls = [], onEdit }) => {
               <button
                 type="button"
                 onClick={() => setUrlToDelete(null)}
-                className="outline-button"
+                className="outline-button cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="button"
                 onClick={remove}
-                className="ink-button bg-[#b6533d] hover:bg-[#963f2e]"
+                className="ink-button bg-[#b6533d] hover:bg-[#963f2e] cursor-pointer"
               >
                 Delete link
               </button>

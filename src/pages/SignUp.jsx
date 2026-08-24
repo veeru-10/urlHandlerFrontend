@@ -57,7 +57,7 @@ const SignUp = () => {
         <h1 className="text-center text-4xl">Create an account</h1>
 
         <div className="flex flex-col gap-4 px-4 py-2 rounded bg-black/5 border border-black/10 mt-4 backdrop-blur-lg ">
-          <Link to="/">
+          {/* <Link to="/">
             <h1 className="text-3xl md:text-4xl text-amber-800 text-center">
               Url
               <span className="text-slate-700">Handler</span>
@@ -68,7 +68,7 @@ const SignUp = () => {
           </button>
           <div className="text-gray-700 text-xl text-center">
             or continue with email
-          </div>
+          </div> */}
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
               <input
@@ -125,7 +125,7 @@ const SignUp = () => {
                 <p className="text-red-500">{errors.mobile.message}</p>
               )}
             </div>
-            <p className="font-semibold text-blue-600 text-sm text-end">
+            <p className="font-semibold text-blue-600 text-sm text-end my-4">
               do you have an account ? -{" "}
               <span className="text-gray-600 underline">
                 <Link to="/login">click here to login</Link>
@@ -137,27 +137,10 @@ const SignUp = () => {
             <button
               type="submit"
               disabled={isSigningUp}
-              className="ink-button mx-auto cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+              className="ink-button mx-auto cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 mb-4"
             >
               {isSigningUp ? "Signing up..." : "Create account"}
             </button>
-
-            {/* <div className="flex gap-4">
-              <label><input type="radio" value="Male" {...register("gender", {required: true})}/> Male</label>
-              <label><input type="radio" value="Female" {...register("gender", {required: true})}/> Female</label>
-              <label><input type="radio" value="Other" {...register("gender", {required: true})}/> Other</label>
-            </div>
-            {errors.gender && <p className="text-red-500">{errors.gender.message}</p>}
-            
-            <div className="grid grid-cols-2 gap-y-4 justify-center items-center">
-              <label><input type="checkbox" value="reading" {...register("interests")}/> Reading</label>
-              <label><input type="checkbox" value="gaming" {...register("interests")}/> gaming</label>
-              <label><input type="checkbox" value="watching" {...register("interests")}/> watching</label>
-              <label><input type="checkbox" value="sleeping" {...register("interests")}/> sleeping</label>
-              <label><input type="checkbox" value="exercise" {...register("interests")}/> exercise</label>
-              <label><input type="checkbox" value="dancing" {...register("interests")}/> dancing</label>
-            </div>
-            {errors.interests && <p className="text-red-500">{errors.interests.message}</p>} */}
           </form>
         </div>
       </div>

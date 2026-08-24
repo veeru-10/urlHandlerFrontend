@@ -51,12 +51,12 @@ const Login = () => {
         <h1 className="text-center text-4xl">Sign In</h1>
 
         <div className="flex flex-col gap-4 px-4 rounded bg-black/5 border border-black/10 mt-4 backdrop-blur-lg py-10">
-          <Link to="/">
+          {/* <Link to="/">
             <h1 className="text-3xl md:text-4xl text-amber-800 text-center">
               Url
               <span className="text-slate-700">Handler</span>
             </h1>
-          </Link>
+          </Link> */}
           <button className="px-8 py-3 bg-amber-800 text-white rounded-lg mx-auto btn">
             continue with google
           </button>
@@ -81,7 +81,7 @@ const Login = () => {
                   type={showPassword ? "text" : "password"}
                   {...register("password")}
                   placeholder="Your password.."
-                  className="border px-4 py-2 pr-12 rounded w-full outline-0 foucs:border-2 focus:border-gray-400 transition-all duration-500 text-xl"
+                  className="border px-4 py-2 pr-12 rounded w-full outline-0 foucs:border-2 focus:border-gray-400 transition-all duration-500"
                 />
                 <button
                   type="button"
