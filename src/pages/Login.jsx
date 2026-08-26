@@ -7,11 +7,14 @@ import { clearAuthError, loginUser } from "../store/stores/authSlice";
 import { useNavigate } from "react-router";
 import { z } from "zod";
 import { Eye, EyeOff } from "lucide-react";
+import google from '../assets/Google.png'
 
 const loginSchema = z.object({
   email: z.string().email("enter a valid email"),
   password: z.string().min(6, "atleast 6 characters"),
 });
+const API_URL = import.meta.env.VITE_BACKEND_URI || "http://localhost:5050";
+
 const Login = () => {
   const {
     register,
@@ -50,15 +53,21 @@ const Login = () => {
       <div className="max-w-xl sm:mx-auto mx-4 my-5 flex justify-center flex-col">
         <h1 className="text-center text-4xl">Sign In</h1>
 
-        <div className="flex flex-col gap-4 px-4 rounded bg-black/5 border border-black/10 mt-4 backdrop-blur-lg py-10">
+        <div className="flex flex-col gap-4 px-4 rounded bg-black/5 border border-black/10 mt-4 backdrop-blur-lg py-6">
           {/* <Link to="/">
             <h1 className="text-3xl md:text-4xl text-amber-800 text-center">
               Url
               <span className="text-slate-700">Handler</span>
             </h1>
           </Link> */}
-          <button className="px-8 py-3 bg-amber-800 text-white rounded-lg mx-auto btn">
-            continue with google
+          <button
+            type="button"
+            onClick={() => {
+              window.location.href = `${API_URL}/api/auth/google`;
+            }}
+            className="px-8 py-3 bg-amber-800 text-white rounded-lg mx-auto btn cursor-pointer flex gap-2"
+          >
+            <span> <img src={google} className="size-6" alt="" /></span>continue with google
           </button>
           <div className="text-gray-700 text-xl text-center">
             or continue with email
@@ -110,7 +119,7 @@ const Login = () => {
             <button
               type="submit"
               disabled={isLoggingIn}
-              className="ink-button mr-auto cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
+              className="ink-button mr-auto cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 "
             >
               {isLoggingIn ? "Logging in..." : "Sign in"}
             </button>

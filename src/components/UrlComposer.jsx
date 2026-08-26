@@ -40,12 +40,10 @@ const UrlComposer = ({ editingUrl, onClose }) => {
 
   useEffect(() => {
     if (window.location.hash !== "#new-link") return undefined;
-
     const focusInput = () => {
       originalUrlInput.current?.scrollIntoView({ behavior: "smooth", block: "center" });
       originalUrlInput.current?.focus();
     };
-
     const frameId = window.requestAnimationFrame(focusInput);
     return () => window.cancelAnimationFrame(frameId);
   }, []);

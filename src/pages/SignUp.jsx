@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { signupUser } from "../store/stores/authSlice";
 import { Eye, EyeOff } from "lucide-react";
 
+import google from '../assets/Google.png'
+
 //i have to define schma for validation
 const signUpSchema = z.object({
   name: z
@@ -25,6 +27,7 @@ const signUpSchema = z.object({
     .string()
     .regex(/^[0-9]{10}$/, { message: "Mobile number must be 10 digits" }),
 });
+const API_URL = import.meta.env.VITE_BACKEND_URI || "http://localhost:5050";
 
 const SignUp = () => {
   //initialize useForm and pass the zodReslover
@@ -62,14 +65,20 @@ const SignUp = () => {
               Url
               <span className="text-slate-700">Handler</span>
             </h1>
-          </Link>
-          <button className="px-8 py-3 bg-amber-800 text-white rounded-lg mx-auto btn">
-            continue with google
+          </Link> */}
+          <button
+            type="button"
+            onClick={() => {
+              window.location.href = `${API_URL}/api/auth/google`;
+            }}
+            className="px-8 py-3 bg-amber-800 text-white rounded-lg mx-auto btn mt-4 cursor-pointer flex gap-2"
+          >
+            <span> <img src={google} className="size-6" alt="" /> </span>continue with google 
           </button>
           <div className="text-gray-700 text-xl text-center">
             or continue with email
-          </div> */}
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          </div>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-2">
             <div>
               <input
                 type="text"
@@ -137,7 +146,7 @@ const SignUp = () => {
             <button
               type="submit"
               disabled={isSigningUp}
-              className="ink-button mx-auto cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 mb-4"
+              className="ink-button mx-auto cursor-pointer disabled:cursor-not-allowed disabled:opacity-60 mb-2"
             >
               {isSigningUp ? "Signing up..." : "Create account"}
             </button>
